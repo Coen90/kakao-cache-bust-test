@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cache Test V1</title>
+  <meta name="description" content="Kakao OG cache-bust experiment page." />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Cache Test V1" />
+  <meta property="og:description" content="Kakao OG cache-bust experiment - V1 deployment." />
+  <meta property="og:image" content="https://coen90.github.io/kakao-cache-bust-test/images/og-v1.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="https://coen90.github.io/kakao-cache-bust-test/" />
+  <meta property="og:site_name" content="Kakao Cache-Bust Test" />
+
+  <style>
+    html, body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", system-ui, sans-serif; color: #1a1a1a; background: #fafafa; }
+    main { max-width: 720px; margin: 0 auto; padding: 48px 24px; line-height: 1.6; }
+    h1 { font-size: 28px; margin: 0 0 16px; }
+    .badge { display: inline-block; padding: 4px 10px; border-radius: 4px; background: #1e5adc; color: #fff; font-weight: 600; font-size: 14px; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+    th, td { padding: 8px 10px; border-bottom: 1px solid #e0e0e0; text-align: left; }
+    th { background: #f0f0f0; }
+    code { background: #eee; padding: 1px 6px; border-radius: 3px; font-size: 13px; }
+    .preview { margin: 24px 0; }
+    .preview img { max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px; }
+    .qp { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Kakao Cache-Bust Test <span class="badge" id="badge">V1</span></h1>
+
+    <p>이 페이지는 카카오톡 공유 시 OG 캐시 동작을 검증하기 위한 정적 테스트용 페이지입니다.</p>
+
+    <h2>현재 배포 상태</h2>
+    <table>
+      <tr><th>og:title</th><td><code>Cache Test V1</code></td></tr>
+      <tr><th>og:image</th><td><code>images/og-v1.png</code></td></tr>
+      <tr><th>og:url</th><td><code>https://coen90.github.io/kakao-cache-bust-test/</code> (query param 미포함, 통제 변수)</td></tr>
+    </table>
+
+    <h2>현재 URL의 query parameter</h2>
+    <p>이 페이지를 접근한 URL의 query: <span class="qp" id="qp">(없음)</span></p>
+    <p style="color:#666;font-size:13px;">참고: query parameter는 OG 응답에 영향을 주지 않습니다 (정적 호스팅). 이 표시는 실험 진행 중 어떤 URL에서 페이지를 열었는지 확인하기 위한 것입니다.</p>
+
+    <h2>OG 이미지 미리보기</h2>
+    <div class="preview">
+      <img src="images/og-v1.png" alt="OG image V1 preview" />
+    </div>
+
+    <h2>실험 가설</h2>
+    <ul>
+      <li><strong>H1</strong>: Kakao OG scraper가 URL + query parameter 조합을 별개 cache key로 다루는가?</li>
+      <li><strong>H2</strong>: H1이 참이라면, OG 변경 후 새 query param으로 공유하면 새 OG가 반영되는가?</li>
+    </ul>
+
+    <p style="color:#666;font-size:13px;">자세한 실험 프로토콜은 리포지토리의 <code>.omc/plans/kakao-cache-bust-test.md</code>와 <code>EXPERIMENT_LOG.md</code>를 참고하세요.</p>
+  </main>
+
+  <script>
+    // Display query string for human verification only.
+    // Note: this does NOT and cannot affect OG meta tags (Kakao scraper does not run JS).
+    const params = new URLSearchParams(window.location.search);
+    const qpEl = document.getElementById('qp');
+    if (params.toString()) qpEl.textContent = '?' + params.toString();
+  </script>
+</body>
+</html>
